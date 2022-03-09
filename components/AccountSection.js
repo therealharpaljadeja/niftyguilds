@@ -5,7 +5,6 @@ import ConnectWallet from "./ConnectWallet";
 
 const AccountSection = memo(() => {
 	const { account, connect, walletConnecting } = useContext(Web3Context);
-	console.log("account section");
 	if (account) {
 		return (
 			<HStack>

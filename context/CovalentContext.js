@@ -6,6 +6,7 @@ export const CovalentContext = React.createContext(null);
 let API_KEY = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 
 export function CovalentContextProvider({ children }) {
+	const [NFTsWithoutStats, setNFTsWithOutStats] = useState(undefined);
 	const [NFTs, setNFTs] = useState(undefined);
 
 	async function getNFTs(accountAddress, chain_ids) {
@@ -32,8 +33,11 @@ export function CovalentContextProvider({ children }) {
 
 		setNFTs(finalResult);
 	}
+
+	//
+
 	return (
-		<CovalentContext.Provider value={{ getNFTs, NFTs }}>
+		<CovalentContext.Provider value={{ getNFTs, NFTs, NFTsWithoutStats }}>
 			{children}
 		</CovalentContext.Provider>
 	);

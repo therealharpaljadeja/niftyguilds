@@ -13,6 +13,9 @@ import { FiHash } from "react-icons/fi";
 import { ChannelContext } from "../context/ChannelContext";
 import { ServerContext } from "../context/ServerContext";
 import { TextileContext } from "../context/TextileContext";
+import axios from "axios";
+
+let API_KEY = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 
 function Server() {
 	const { selectedServer } = useContext(ServerContext);
@@ -20,6 +23,25 @@ function Server() {
 		useContext(ChannelContext);
 	const { createChannel } = useContext(TextileContext);
 	const [newChannelName, setNewChannelName] = useState("");
+	const [serverStats, setServerStats] = useState(null);
+
+	useEffect(() => {
+		async function getNFTStats() {
+			try {
+				let response = await axios.get(
+					`https://api.covalenthq.com/v1/${selectedServer.chain_id}/nft_market/collection/${selectedServer.contract_address}/?key=${API_KEY}`
+				);
+				console.log(response);
+				setServerStats({ stats: response.data.data.items[0] });
+			} catch (err) {
+				console.log(err);
+				setServerStats(undefined);
+			}
+		}
+		if (selectedServer) {
+			getNFTStats();
+		}
+	}, [selectedServer]);
 
 	function handleChange({ target }) {
 		setNewChannelName(target.value);
@@ -52,29 +74,46 @@ function Server() {
 				alignItems="flex-start"
 				bg="var(--chakra-colors-brand-200)"
 			>
-				{selectedServer ? (
-					<Heading size="sm">Stats</Heading>
-				) : (
-					<Skeleton>Stats Loading...</Skeleton>
-				)}
-				{/* {serverMembers !== null ? (
-					<HStack
-						width="100%"
-						padding={2}
-						borderRadius={5}
-						spacing={1}
-						color="var(--chakra-colors-brand-500)"
-						_hover={{
-							cursor: "pointer",
-							background: "var(--chakra-colors-brand-400)",
-						}}
-					>
-						<Text>Server Members: </Text>
-						<Text>{serverMembers}</Text>
-					</HStack>
-				) : (
-					<Skeleton>Server Members Loading...</Skeleton>
-				)} */}
+				{serverStats != null && serverStats != undefined ? (
+					<VStack>
+						<Heading size="sm">Stats</Heading>
+						<HStack
+							justifyContent="flex-start"
+							width="100%"
+							padding={2}
+							borderRadius={5}
+							spacing={1}
+							color={"var(--chakra-colors-brand-500)"}
+							_hover={{
+								cursor: "pointer",
+								background: "var(--chakra-colors-brand-400)",
+							}}
+						>
+							<Text>Collection Ticker: </Text>
+							<Text>
+								{serverStats.stats.collection_ticker_symbol}
+							</Text>
+						</HStack>
+
+						<HStack
+							justifyContent="flex-start"
+							width="100%"
+							padding={2}
+							borderRadius={5}
+							spacing={1}
+							color={"var(--chakra-colors-brand-500)"}
+							_hover={{
+								cursor: "pointer",
+								background: "var(--chakra-colors-brand-400)",
+							}}
+						>
+							<Text>Average Volume: </Text>
+							<Text>
+								{serverStats.stats.average_volume_quote_day}
+							</Text>
+						</HStack>
+					</VStack>
+				) : null}
 				{selectedServer ? (
 					<Heading size="sm">Channels</Heading>
 				) : (
@@ -93,6 +132,11 @@ function Server() {
 									selectedChannel === channel
 										? "white"
 										: "var(--chakra-colors-brand-500)"
+								}
+								bg={
+									selectedChannel === channel
+										? "var(--chakra-colors-brand-400)"
+										: null
 								}
 								onClick={() => setSelectedChannel(channel)}
 								_hover={{

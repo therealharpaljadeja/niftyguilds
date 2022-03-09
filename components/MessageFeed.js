@@ -13,6 +13,7 @@ import { ChannelContext } from "../context/ChannelContext";
 import { MessageContext } from "../context/MessageContext";
 import { ServerContext } from "../context/ServerContext";
 import { TextileContext } from "../context/TextileContext";
+import svgAvatarGenerator from "../helpers/svgAvatarGenerator";
 
 function MessageFeed({ id, selectedChannel }) {
 	const { selectedServer } = useContext(ServerContext);
@@ -29,7 +30,9 @@ function MessageFeed({ id, selectedChannel }) {
 	async function messagesCallback(reply, err) {
 		if (reply) {
 			console.log(currChannelMessages, reply);
-			dispatch({ type: "ADD_MESSAGE", payload: [reply.instance] });
+			if (reply.instance.channel_id == selectedChannel._id) {
+				dispatch({ type: "ADD_MESSAGE", payload: [reply.instance] });
+			}
 		} else {
 			console.log(err);
 		}
@@ -43,20 +46,18 @@ function MessageFeed({ id, selectedChannel }) {
 		console.log(closer);
 		setLoadingMessages(false);
 		// setUnsubscribe(closer.close);
+	}, [selectedChannel, id]);
 
-		return () => {};
-	}, [selectedChannel]);
-
-	// useEffect(() => {
-	// 	return () => {
-	// 		console.log("unmounting message feed");
-	// 		if (unsubscribe) {
-	// 			unsubscribe();
-	// 		}
-	// 		dispatch({ type: "INITIAL_STATE" });
-	// 		console.log("id changed");
-	// 	};
-	// }, [id]);
+	useEffect(() => {
+		return () => {
+			console.log("unmounting message feed");
+			if (unsubscribe) {
+				unsubscribe();
+			}
+			dispatch({ type: "INITIAL_STATE" });
+			console.log("id changed");
+		};
+	}, [id]);
 
 	return (
 		<div
@@ -79,7 +80,7 @@ function MessageFeed({ id, selectedChannel }) {
 					</Heading>
 				) : null}
 				{!loadingMessages & !loadingChannel ? (
-					currChannelMessages.length !== 0 ? (
+					currChannelMessages.length > 0 ? (
 						currChannelMessages.map((message) => {
 							return (
 								<HStack
@@ -95,7 +96,14 @@ function MessageFeed({ id, selectedChannel }) {
 											"var(--chakra-colors-brand-400)",
 									}}
 								>
-									<Avatar name="Bored Ape #1" size="md" />
+									<Avatar
+										name={message.account_address}
+										src={svgAvatarGenerator(
+											message.account_address,
+											{ dataUri: true }
+										)}
+										size="md"
+									/>
 									<VStack spacing={0} alignItems="flex-start">
 										<Tag
 											bg="var(--chakra-colors-brand-300)"

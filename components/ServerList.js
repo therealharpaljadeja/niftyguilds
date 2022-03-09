@@ -20,6 +20,7 @@ function ServerList() {
 	const { getServerById, createServer, createChannel, getAllServers } =
 		useContext(TextileContext);
 	const { NFTs } = useContext(CovalentContext);
+
 	useEffect(async () => {
 		if (NFTs !== undefined) {
 			let servers = [];

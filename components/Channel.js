@@ -24,7 +24,6 @@ function Channel() {
 	const [currMessage, setCurrMessage] = useState("");
 	const { selectedChannel } = useContext(ChannelContext);
 	const { createMessage } = useContext(TextileContext);
-	const { dispatch } = useContext(MessageContext);
 	const { account } = useContext(Web3Context);
 
 	async function sendMessage() {
@@ -36,10 +35,6 @@ function Channel() {
 		setCurrMessage("");
 		console.log(message);
 	}
-
-	useEffect(() => {
-		return () => dispatch({ type: "INITIAL_STATE" });
-	}, [selectedChannel]);
 
 	return (
 		<VStack

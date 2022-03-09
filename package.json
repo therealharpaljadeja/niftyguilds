@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.6",
+    "@dicebear/avatars": "^4.10.2",
+    "@dicebear/micah": "^4.10.2",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@fontsource/dm-sans": "^4.5.2",

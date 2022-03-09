@@ -1,7 +1,6 @@
 import { Button } from "@chakra-ui/react";
 
 function ConnectWallet({ onClick, isLoading }) {
-	console.log("connect wallet");
 	return (
 		<Button
 			isLoading={isLoading}
