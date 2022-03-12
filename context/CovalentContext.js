@@ -26,11 +26,8 @@ export function CovalentContextProvider({ children }) {
 				return { ...nft, chain_id: id };
 			});
 
-			console.log(nftsWithChainId);
-
 			finalResult = [...finalResult, ...nftsWithChainId];
 		}
-
 		setNFTs(finalResult);
 	}
 

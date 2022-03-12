@@ -24,6 +24,7 @@ export function ChannelContextProvider({ children }) {
 			setSelectedChannel(channels[0]);
 		}
 	}, [selectedServer]);
+
 	return (
 		<ChannelContext.Provider
 			value={{

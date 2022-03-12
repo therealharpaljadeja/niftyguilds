@@ -12,52 +12,37 @@ import { useContext, useEffect, useState } from "react";
 import { ChannelContext } from "../context/ChannelContext";
 import { MessageContext } from "../context/MessageContext";
 import { ServerContext } from "../context/ServerContext";
-import { TextileContext } from "../context/TextileContext";
 import svgAvatarGenerator from "../helpers/svgAvatarGenerator";
 
 function MessageFeed({ id, selectedChannel }) {
 	const { selectedServer } = useContext(ServerContext);
-	const {
-		currChannelMessages,
-		dispatch,
-		setLoadingMessages,
-		loadingMessages,
-	} = useContext(MessageContext);
+	const { currChannelMessages, loadingMessages } = useContext(MessageContext);
 	const { loadingChannel } = useContext(ChannelContext);
-	const { loadMessages, subscribeToMessages } = useContext(TextileContext);
-	const [unsubscribe, setUnsubscribe] = useState(null);
+	// const { loadMessages, subscribeToMessages } = useContext(TextileContext);
+	// const [unsubscribe, setUnsubscribe] = useState(null);
 
-	async function messagesCallback(reply, err) {
-		if (reply) {
-			console.log(currChannelMessages, reply);
-			if (reply.instance.channel_id == selectedChannel._id) {
-				dispatch({ type: "ADD_MESSAGE", payload: [reply.instance] });
-			}
-		} else {
-			console.log(err);
-		}
-	}
+	// useEffect(async () => {
+	// 	setLoadingMessages(true);
+	// 	console.log(currChannelMessages);
+	// 	let messages = await loadMessages(selectedChannel._id);
+	// 	dispatch({ type: "ADD_MESSAGE", payload: messages });
+	// 	let closer = await subscribeToMessages(messagesCallback);
+	// 	console.log(closer);
+	// 	setLoadingMessages(false);
+	// 	// setUnsubscribe(closer.close);
+	// }, [selectedChannel, id]);
 
-	useEffect(async () => {
-		setLoadingMessages(true);
-		let messages = await loadMessages(selectedChannel._id);
-		dispatch({ type: "ADD_MESSAGE", payload: messages });
-		let closer = await subscribeToMessages(messagesCallback);
-		console.log(closer);
-		setLoadingMessages(false);
-		// setUnsubscribe(closer.close);
-	}, [selectedChannel, id]);
-
-	useEffect(() => {
-		return () => {
-			console.log("unmounting message feed");
-			if (unsubscribe) {
-				unsubscribe();
-			}
-			dispatch({ type: "INITIAL_STATE" });
-			console.log("id changed");
-		};
-	}, [id]);
+	// useEffect(() => {
+	// 	return () => {
+	// 		console.log("unmounting message feed");
+	// 		if (unsubscribe) {
+	// 			unsubscribe();
+	// 		}
+	// 		dispatch({ type: "INITIAL_STATE" });
+	// 		console.log(currChannelMessages);
+	// 		console.log("id changed");
+	// 	};
+	// }, []);
 
 	return (
 		<div

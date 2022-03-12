@@ -2,13 +2,18 @@ import { useContext, memo } from "react";
 import { HStack, Tag, Avatar } from "@chakra-ui/react";
 import { Web3Context } from "../context/Web3Context";
 import ConnectWallet from "./ConnectWallet";
+import svgAvatarGenerator from "../helpers/svgAvatarGenerator";
 
 const AccountSection = memo(() => {
 	const { account, connect, walletConnecting } = useContext(Web3Context);
 	if (account) {
 		return (
 			<HStack>
-				<Avatar size="sm" name={account} />
+				<Avatar
+					size="sm"
+					src={svgAvatarGenerator(account, { dataUri: true })}
+					name={account}
+				/>
 				<Tag
 					bg="var(--chakra-colors-brand-300)"
 					color="white"

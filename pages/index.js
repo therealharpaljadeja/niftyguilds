@@ -13,7 +13,6 @@ import { ServerContext } from "../context/ServerContext";
 export default function Home() {
 	const { account } = useContext(Web3Context);
 	const { getNFTs } = useContext(CovalentContext);
-	const { selectedServer } = useContext(ServerContext);
 	useEffect(() => {
 		if (account) {
 			getNFTs(account, ["1", "137", "43114", "56", "250"]);
@@ -28,7 +27,7 @@ export default function Home() {
 			<IsWalletInstalledModal />
 			<HStack spacing={0}>
 				<ServerList />
-				<VStack width="300px" height="100vh" spacing={0}>
+				<VStack width="350px" height="100vh" spacing={0}>
 					<Server />
 					<VStack
 						height="55px"

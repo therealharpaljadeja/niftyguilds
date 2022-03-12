@@ -7,7 +7,6 @@ import { CovalentContextProvider } from "../context/CovalentContext";
 import { TextileContextProvider } from "../context/TextileContext";
 import { ServerContextProvider } from "../context/ServerContext";
 import { ChannelContextProvider } from "../context/ChannelContext";
-import { MessageContextProvider } from "../context/MessageContext";
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -16,11 +15,9 @@ function MyApp({ Component, pageProps }) {
 				<TextileContextProvider>
 					<ServerContextProvider>
 						<ChannelContextProvider>
-							<MessageContextProvider>
-								<ChakraProvider theme={theme}>
-									<Component {...pageProps} />
-								</ChakraProvider>
-							</MessageContextProvider>
+							<ChakraProvider theme={theme}>
+								<Component {...pageProps} />
+							</ChakraProvider>
 						</ChannelContextProvider>
 					</ServerContextProvider>
 				</TextileContextProvider>

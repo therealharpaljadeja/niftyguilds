@@ -18,7 +18,10 @@ import { ChannelContext } from "../context/ChannelContext";
 import { TextileContext } from "../context/TextileContext";
 import { Web3Context } from "../context/Web3Context";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { MessageContext } from "../context/MessageContext";
+import {
+	MessageContext,
+	MessageContextProvider,
+} from "../context/MessageContext";
 
 function Channel() {
 	const [currMessage, setCurrMessage] = useState("");
@@ -65,11 +68,13 @@ function Channel() {
 				</HStack>
 			</VStack>
 			{selectedChannel ? (
-				<MessageFeed
-					id={selectedChannel._id}
-					selectedChannel={selectedChannel}
-					key={selectedChannel._id}
-				/>
+				<MessageContextProvider key={selectedChannel._id}>
+					<MessageFeed
+						id={selectedChannel._id}
+						selectedChannel={selectedChannel}
+						key={selectedChannel._id}
+					/>
+				</MessageContextProvider>
 			) : (
 				<VStack
 					width="100%"

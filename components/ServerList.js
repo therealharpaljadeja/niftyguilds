@@ -27,10 +27,15 @@ function ServerList() {
 			let serversInDB = await getAllServers();
 			console.log(serversInDB);
 			for await (let nft of NFTs) {
-				// check if server for nft is created.
-				let result = serversInDB.filter(
-					(server) => server.contract_address == nft.contract_address
-				);
+				var result = [];
+				if (serversInDB) {
+					// check if server for nft is created.
+					result = serversInDB.filter(
+						(server) =>
+							server.contract_address == nft.contract_address
+					);
+				}
+
 				if (result.length > 0) {
 					servers.push(result[0]);
 				} else {

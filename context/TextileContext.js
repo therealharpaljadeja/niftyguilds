@@ -141,6 +141,7 @@ export function TextileContextProvider({ children }) {
 
 	async function loadMessages(channel_id) {
 		let query = new Where("channel_id").eq(channel_id);
+		query.sort = { fieldPath: "_mod", desc: false };
 		let messages = await client.find(
 			ThreadID.fromString(ThreadId),
 			"messages",
