@@ -44,12 +44,16 @@ export function TextileContextProvider({ children }) {
 	}
 
 	async function getChannelById(channel_id) {
+		console.log("getting cahnnel");
+		console.log(client);
+		console.log(channel_id);
 		if (client) {
 			let result = await client.findByID(
 				ThreadID.fromString(ThreadId),
 				"channels",
 				channel_id
 			);
+			console.log(result);
 			return result;
 		}
 	}

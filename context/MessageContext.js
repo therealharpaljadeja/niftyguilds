@@ -18,7 +18,6 @@ export function MessageContextProvider({ children }) {
 	const [currChannelMessages, dispatch] = useReducer(messageReducer, []);
 	// const [, setCurrChannelMessages] = useState([]);
 	const [loadingMessages, setLoadingMessages] = useState(true);
-	const [unsubscribe, setUnsubscribe] = useState(null);
 	const { selectedChannel } = useContext(ChannelContext);
 	const { loadMessages, subscribeToMessages } = useContext(TextileContext);
 
@@ -26,10 +25,6 @@ export function MessageContextProvider({ children }) {
 		if (reply) {
 			if (reply.instance.channel_id == selectedChannel._id) {
 				dispatch({ type: "ADD_MESSAGE", payload: [reply.instance] });
-				// setCurrChannelMessages([
-				// 	...currChannelMessages,
-				// 	reply.instance,
-				// ]);
 			}
 		} else {
 			console.log(err);
@@ -38,14 +33,22 @@ export function MessageContextProvider({ children }) {
 
 	useEffect(() => {
 		async function init() {
+			let closer = await subscribeToMessages(messagesCallback);
+			return () => {
+				closer.close();
+			};
+		}
+		init();
+	}, []);
+
+	useEffect(() => {
+		async function init() {
 			setLoadingMessages(true);
 			let messages = await loadMessages(selectedChannel._id);
 			dispatch({ type: "ADD_MESSAGE", payload: messages });
 
 			// setCurrChannelMessages(messages);
-			let closer = await subscribeToMessages(messagesCallback);
 			setLoadingMessages(false);
-			setUnsubscribe(closer);
 		}
 
 		if (selectedChannel && currChannelMessages.length === 0) {
@@ -53,11 +56,8 @@ export function MessageContextProvider({ children }) {
 		}
 
 		return () => {
-			if (unsubscribe) {
-				unsubscribe.close();
-				dispatch({ type: "INITIAL_STATE" });
-				console.log("message feed unmounted");
-			}
+			dispatch({ type: "INITIAL_STATE" });
+			console.log("message feed unmounted");
 		};
 	}, [selectedChannel]);
 

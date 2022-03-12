@@ -18,31 +18,6 @@ function MessageFeed({ id, selectedChannel }) {
 	const { selectedServer } = useContext(ServerContext);
 	const { currChannelMessages, loadingMessages } = useContext(MessageContext);
 	const { loadingChannel } = useContext(ChannelContext);
-	// const { loadMessages, subscribeToMessages } = useContext(TextileContext);
-	// const [unsubscribe, setUnsubscribe] = useState(null);
-
-	// useEffect(async () => {
-	// 	setLoadingMessages(true);
-	// 	console.log(currChannelMessages);
-	// 	let messages = await loadMessages(selectedChannel._id);
-	// 	dispatch({ type: "ADD_MESSAGE", payload: messages });
-	// 	let closer = await subscribeToMessages(messagesCallback);
-	// 	console.log(closer);
-	// 	setLoadingMessages(false);
-	// 	// setUnsubscribe(closer.close);
-	// }, [selectedChannel, id]);
-
-	// useEffect(() => {
-	// 	return () => {
-	// 		console.log("unmounting message feed");
-	// 		if (unsubscribe) {
-	// 			unsubscribe();
-	// 		}
-	// 		dispatch({ type: "INITIAL_STATE" });
-	// 		console.log(currChannelMessages);
-	// 		console.log("id changed");
-	// 	};
-	// }, []);
 
 	return (
 		<div

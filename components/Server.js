@@ -33,9 +33,9 @@ let API_KEY = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 function Server() {
 	const toast = useToast();
 	const { selectedServer } = useContext(ServerContext);
-	const { selectedChannel, channels, setSelectedChannel } =
+	const { selectedChannel, channels, setSelectedChannel, dispatch } =
 		useContext(ChannelContext);
-	const { createChannel } = useContext(TextileContext);
+	const { createChannel, getChannelById } = useContext(TextileContext);
 	const [newChannelName, setNewChannelName] = useState("");
 	const [serverStats, setServerStats] = useState(null);
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,7 +47,6 @@ function Server() {
 				let response = await axios.get(
 					`https://api.covalenthq.com/v1/${selectedServer.chain_id}/nft_market/collection/${selectedServer.contract_address}/?key=${API_KEY}`
 				);
-				console.log(response.data.data.items);
 				setServerStats({ stats: response.data.data.items[0] });
 			} catch (err) {
 				console.log(err);
@@ -65,13 +64,16 @@ function Server() {
 
 	async function createChannelFromModal(server_id, channel_name) {
 		setChannelCreating(true);
-		await createChannel(server_id, channel_name);
+		let channel_id = await createChannel(server_id, channel_name);
 		toast({
 			title: "Channel created",
 			description: "Channel Successfully created! Refresh",
 			status: "success",
 			isClosable: true,
 		});
+		let channel = await getChannelById(channel_id[0]);
+		dispatch({ type: "ADD_CHANNEL", payload: [channel] });
+		setNewChannelName("");
 		onClose();
 		setChannelCreating(false);
 	}

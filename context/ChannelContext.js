@@ -1,13 +1,23 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useReducer } from "react";
 import { ServerContext } from "./ServerContext";
 import { TextileContext } from "./TextileContext";
+
+const channelReducer = (state, action) => {
+	switch (action.type) {
+		case "ADD_CHANNEL":
+			return [...state, ...action.payload];
+		case "INITIAL_STATE":
+		default:
+			return [];
+	}
+};
 
 export const ChannelContext = React.createContext(null);
 
 export function ChannelContextProvider({ children }) {
 	const { selectedServer } = useContext(ServerContext);
 	const { getChannelById } = useContext(TextileContext);
-	const [channels, setChannels] = useState([]);
+	const [channels, dispatch] = useReducer(channelReducer, []);
 	const [selectedChannel, setSelectedChannel] = useState(null);
 	const [loadingChannel, setLoadingChannel] = useState(false);
 
@@ -19,10 +29,14 @@ export function ChannelContextProvider({ children }) {
 				let channel = await getChannelById(channel_id);
 				channels.push(channel);
 			}
-			setChannels(channels);
+			dispatch({ type: "ADD_CHANNEL", payload: channels });
 			setLoadingChannel(false);
 			setSelectedChannel(channels[0]);
 		}
+
+		return () => {
+			dispatch({ type: "INITIAL_STATE" });
+		};
 	}, [selectedServer]);
 
 	return (
@@ -32,6 +46,7 @@ export function ChannelContextProvider({ children }) {
 				channels,
 				setSelectedChannel,
 				loadingChannel,
+				dispatch,
 			}}
 		>
 			{children}
