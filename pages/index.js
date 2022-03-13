@@ -23,6 +23,7 @@ export default function Home() {
 		<div>
 			<Head>
 				<title>NiftyGuilds</title>
+				<link rel="icon" href="/logo.svg"></link>
 			</Head>
 			<IsWalletInstalledModal />
 			<HStack spacing={0}>
