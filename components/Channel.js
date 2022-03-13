@@ -36,7 +36,6 @@ function Channel() {
 		};
 		let message = await createMessage(selectedChannel._id, messageJson);
 		setCurrMessage("");
-		console.log(message);
 	}
 
 	return (
@@ -94,14 +93,6 @@ function Channel() {
 				borderTop="1px solid var(--chakra-colors-brand-200)"
 				bg="var(--chakra-colors-brand-100)"
 			>
-				<IconButton
-					icon={<AiOutlinePlusCircle />}
-					bg="var(--chakra-colors-brand-300)"
-					_hover={{
-						bg: "var(--chakra-colors-brand-300)",
-					}}
-					disabled={selectedChannel === null}
-				/>
 				<Input
 					disabled={selectedChannel === null}
 					value={currMessage}

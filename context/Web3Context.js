@@ -34,7 +34,6 @@ export function Web3ContextProvider({ children }) {
 						variant: "left-accent",
 						isClosable: true,
 					});
-					console.log(err);
 				})
 				.finally(() => {
 					setWalletConnecting(false);

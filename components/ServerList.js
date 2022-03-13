@@ -25,7 +25,6 @@ function ServerList() {
 		if (NFTs !== undefined) {
 			let servers = [];
 			let serversInDB = await getAllServers();
-			console.log(serversInDB);
 			for await (let nft of NFTs) {
 				var result = [];
 				if (serversInDB) {
@@ -43,13 +42,11 @@ function ServerList() {
 					let server = await createServer(nft);
 					if (server !== undefined) {
 						server = await getServerById(server[0]);
-						console.log(server);
 						let channel = await createChannel(
 							server._id,
 							"general"
 						);
 						server = await getServerById(server._id);
-						console.log(channel);
 						servers.push(server);
 					}
 				}

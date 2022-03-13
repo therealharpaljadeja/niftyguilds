@@ -44,16 +44,12 @@ export function TextileContextProvider({ children }) {
 	}
 
 	async function getChannelById(channel_id) {
-		console.log("getting cahnnel");
-		console.log(client);
-		console.log(channel_id);
 		if (client) {
 			let result = await client.findByID(
 				ThreadID.fromString(ThreadId),
 				"channels",
 				channel_id
 			);
-			console.log(result);
 			return result;
 		}
 	}
@@ -98,7 +94,6 @@ export function TextileContextProvider({ children }) {
 				[channelValues]
 			);
 			server.channels = [...server.channels, channel[0]];
-			console.log(server.channels);
 			await client.save(ThreadID.fromString(ThreadId), "servers", [
 				server,
 			]);
@@ -132,7 +127,6 @@ export function TextileContextProvider({ children }) {
 
 	async function subscribeToMessages(callback) {
 		if (client) {
-			console.log("subscribing to message updates.");
 			let closer = client.listen(
 				ThreadID.fromString(ThreadId),
 				[{ collectionName: "messages" }, { actionTypes: ["CREATE"] }],

@@ -27,7 +27,6 @@ export function MessageContextProvider({ children }) {
 				dispatch({ type: "ADD_MESSAGE", payload: [reply.instance] });
 			}
 		} else {
-			console.log(err);
 		}
 	}
 
@@ -57,7 +56,6 @@ export function MessageContextProvider({ children }) {
 
 		return () => {
 			dispatch({ type: "INITIAL_STATE" });
-			console.log("message feed unmounted");
 		};
 	}, [selectedChannel]);
 
