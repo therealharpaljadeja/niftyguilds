@@ -91,7 +91,9 @@ function Server() {
 					<ModalHeader textAlign="center">Add Channel</ModalHeader>
 					<ModalBody>
 						<InputGroup>
-							<InputLeftElement children={<FiHash />} />
+							<InputLeftElement>
+								<FiHash />
+							</InputLeftElement>
 							<Input
 								onChange={handleChange}
 								value={newChannelName}

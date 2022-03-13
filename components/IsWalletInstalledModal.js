@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Web3Context } from "../context/Web3Context";
 
-const IsWalletInstalledModal = memo(() => {
+const IsWalletInstalledModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 	const { isWalletInstalled } = useContext(Web3Context);
 	if (!isWalletInstalled)
@@ -38,6 +38,6 @@ const IsWalletInstalledModal = memo(() => {
 			</Modal>
 		);
 	else return null;
-});
+};
 
 export default IsWalletInstalledModal;

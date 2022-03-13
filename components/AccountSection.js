@@ -4,7 +4,7 @@ import { Web3Context } from "../context/Web3Context";
 import ConnectWallet from "./ConnectWallet";
 import svgAvatarGenerator from "../helpers/svgAvatarGenerator";
 
-const AccountSection = memo(() => {
+const AccountSection = () => {
 	const { account, connect, walletConnecting } = useContext(Web3Context);
 	if (account) {
 		return (
@@ -25,6 +25,6 @@ const AccountSection = memo(() => {
 		);
 	} else
 		return <ConnectWallet onClick={connect} isLoading={walletConnecting} />;
-});
+};
 
 export default AccountSection;
