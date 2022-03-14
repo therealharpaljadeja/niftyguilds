@@ -33,8 +33,13 @@ let API_KEY = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 function Server() {
 	const toast = useToast();
 	const { selectedServer } = useContext(ServerContext);
-	const { selectedChannel, channels, setSelectedChannel, dispatch } =
-		useContext(ChannelContext);
+	const {
+		selectedChannel,
+		channels,
+		setSelectedChannel,
+		setLoadingChannel,
+		dispatch,
+	} = useContext(ChannelContext);
 	const { createChannel, getChannelById } = useContext(TextileContext);
 	const [newChannelName, setNewChannelName] = useState("");
 	const [serverStats, setServerStats] = useState(null);
@@ -57,6 +62,21 @@ function Server() {
 		}
 	}, [selectedServer]);
 
+	useEffect(async () => {
+		if (selectedServer) {
+			dispatch({ type: "INITIAL_STATE" });
+			setLoadingChannel(true);
+			let channels = [];
+			for await (let channel_id of selectedServer.channels) {
+				let channel = await getChannelById(channel_id);
+				channels.push(channel);
+			}
+			dispatch({ type: "ADD_CHANNEL", payload: channels });
+			setLoadingChannel(false);
+			setSelectedChannel(channels[0]);
+		}
+	}, [selectedServer]);
+
 	function handleChange({ target }) {
 		setNewChannelName(target.value);
 	}
@@ -76,6 +96,7 @@ function Server() {
 		onClose();
 		setChannelCreating(false);
 	}
+
 	return (
 		<>
 			<Modal
@@ -228,37 +249,57 @@ function Server() {
 				) : (
 					<Skeleton>Channels Loading...</Skeleton>
 				)}
-				{channels.length > 0 ? (
-					channels.map((channel) => {
-						return (
-							<HStack
-								width="100%"
-								padding={2}
-								borderRadius={5}
-								spacing={1}
-								key={channel._id}
-								color={
-									selectedChannel === channel
-										? "white"
-										: "var(--chakra-colors-brand-500)"
-								}
-								bg={
-									selectedChannel === channel
-										? "var(--chakra-colors-brand-400)"
-										: null
-								}
-								onClick={() => setSelectedChannel(channel)}
-								_hover={{
-									cursor: "pointer",
-									background:
-										"var(--chakra-colors-brand-400)",
-								}}
-							>
-								<Icon as={FiHash} />
-								<Text>{channel.name}</Text>
-							</HStack>
-						);
-					})
+				{selectedServer !== null ? (
+					<VStack key={selectedServer._id} width="100%">
+						{channels.length > 0
+							? channels.map((channel) => {
+									return (
+										<HStack
+											width="100%"
+											padding={2}
+											borderRadius={5}
+											spacing={1}
+											key={channel._id}
+											color={
+												selectedChannel == channel
+													? "white"
+													: "var(--chakra-colors-brand-500)"
+											}
+											bg={
+												selectedChannel == channel
+													? "var(--chakra-colors-brand-400)"
+													: null
+											}
+											onClick={() =>
+												setSelectedChannel(channel)
+											}
+											_hover={{
+												cursor: "pointer",
+												background:
+													"var(--chakra-colors-brand-400)",
+											}}
+										>
+											<Icon as={FiHash} />
+											<Text>{channel.name}</Text>
+										</HStack>
+									);
+							  })
+							: null}
+						{channels.length > 0 ? (
+							<VStack width="100%">
+								<Button
+									_hover={{
+										bg: "var(--chakra-colors-brand-300)",
+									}}
+									bg="var(--chakra-colors-brand-300)"
+									width="100%"
+									onClick={onOpen}
+								>
+									Add Channel
+								</Button>
+							</VStack>
+						) : null}
+					</VStack>
 				) : (
 					<VStack>
 						<Skeleton>Channel loading soon</Skeleton>
@@ -266,20 +307,6 @@ function Server() {
 						<Skeleton>Channel loading soon</Skeleton>
 					</VStack>
 				)}
-				{channels.length > 0 ? (
-					<VStack width="100%">
-						<Button
-							_hover={{
-								bg: "var(--chakra-colors-brand-300)",
-							}}
-							bg="var(--chakra-colors-brand-300)"
-							width="100%"
-							onClick={onOpen}
-						>
-							Add Channel
-						</Button>
-					</VStack>
-				) : null}
 			</VStack>
 		</>
 	);

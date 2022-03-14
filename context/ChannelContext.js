@@ -21,24 +21,6 @@ export function ChannelContextProvider({ children }) {
 	const [selectedChannel, setSelectedChannel] = useState(null);
 	const [loadingChannel, setLoadingChannel] = useState(false);
 
-	useEffect(async () => {
-		if (selectedServer) {
-			setLoadingChannel(true);
-			let channels = [];
-			for await (let channel_id of selectedServer.channels) {
-				let channel = await getChannelById(channel_id);
-				channels.push(channel);
-			}
-			dispatch({ type: "ADD_CHANNEL", payload: channels });
-			setLoadingChannel(false);
-			setSelectedChannel(channels[0]);
-		}
-
-		return () => {
-			dispatch({ type: "INITIAL_STATE" });
-		};
-	}, [selectedServer]);
-
 	return (
 		<ChannelContext.Provider
 			value={{
@@ -47,6 +29,7 @@ export function ChannelContextProvider({ children }) {
 				setSelectedChannel,
 				loadingChannel,
 				dispatch,
+				setLoadingChannel,
 			}}
 		>
 			{children}

@@ -17,7 +17,6 @@ import MessageFeed from "./MessageFeed";
 import { ChannelContext } from "../context/ChannelContext";
 import { TextileContext } from "../context/TextileContext";
 import { Web3Context } from "../context/Web3Context";
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import {
 	MessageContext,
 	MessageContextProvider,
