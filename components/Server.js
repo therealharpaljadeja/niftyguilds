@@ -251,40 +251,46 @@ function Server() {
 				)}
 				{selectedServer !== null ? (
 					<VStack key={selectedServer._id} width="100%">
-						{channels.length > 0
-							? channels.map((channel) => {
-									return (
-										<HStack
-											width="100%"
-											padding={2}
-											borderRadius={5}
-											spacing={1}
-											key={channel._id}
-											color={
-												selectedChannel == channel
-													? "white"
-													: "var(--chakra-colors-brand-500)"
-											}
-											bg={
-												selectedChannel == channel
-													? "var(--chakra-colors-brand-400)"
-													: null
-											}
-											onClick={() =>
-												setSelectedChannel(channel)
-											}
-											_hover={{
-												cursor: "pointer",
-												background:
-													"var(--chakra-colors-brand-400)",
-											}}
-										>
-											<Icon as={FiHash} />
-											<Text>{channel.name}</Text>
-										</HStack>
-									);
-							  })
-							: null}
+						{channels.length > 0 ? (
+							channels.map((channel) => {
+								return (
+									<HStack
+										width="100%"
+										padding={2}
+										borderRadius={5}
+										spacing={1}
+										key={channel._id}
+										color={
+											selectedChannel == channel
+												? "white"
+												: "var(--chakra-colors-brand-500)"
+										}
+										bg={
+											selectedChannel == channel
+												? "var(--chakra-colors-brand-400)"
+												: null
+										}
+										onClick={() =>
+											setSelectedChannel(channel)
+										}
+										_hover={{
+											cursor: "pointer",
+											background:
+												"var(--chakra-colors-brand-400)",
+										}}
+									>
+										<Icon as={FiHash} />
+										<Text>{channel.name}</Text>
+									</HStack>
+								);
+							})
+						) : (
+							<VStack width="100%">
+								<Skeleton>Channel loading soon</Skeleton>
+								<Skeleton>Channel loading soon</Skeleton>
+								<Skeleton>Channel loading soon</Skeleton>
+							</VStack>
+						)}
 						{channels.length > 0 ? (
 							<VStack width="100%">
 								<Button
