@@ -19,7 +19,7 @@ export function ChannelContextProvider({ children }) {
 	const { getChannelById } = useContext(TextileContext);
 	const [channels, dispatch] = useReducer(channelReducer, []);
 	const [selectedChannel, setSelectedChannel] = useState(null);
-	const [loadingChannel, setLoadingChannel] = useState(false);
+	const [loadingChannel, setLoadingChannel] = useState(true);
 
 	return (
 		<ChannelContext.Provider

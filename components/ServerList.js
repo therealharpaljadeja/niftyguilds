@@ -88,7 +88,11 @@ function ServerList() {
 				Object.entries(servers).length !== 0 ? (
 					Object.entries(servers).map(([key, server]) => {
 						return (
-							<Tooltip placement="right" label={server.name}>
+							<Tooltip
+								placement="right"
+								label={server.name}
+								key={server._id}
+							>
 								<Avatar
 									size="md"
 									src=""
