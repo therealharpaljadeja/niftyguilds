@@ -307,7 +307,7 @@ function Server() {
 						) : null}
 					</VStack>
 				) : (
-					<VStack>
+					<VStack width="100%">
 						<Skeleton>Channel loading soon</Skeleton>
 						<Skeleton>Channel loading soon</Skeleton>
 						<Skeleton>Channel loading soon</Skeleton>

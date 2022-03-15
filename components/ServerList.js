@@ -4,6 +4,7 @@ import {
 	SkeletonCircle,
 	AvatarBadge,
 	Image,
+	Tooltip,
 } from "@chakra-ui/react";
 import { useContext, useEffect } from "react";
 import { CovalentContext } from "../context/CovalentContext";
@@ -87,23 +88,27 @@ function ServerList() {
 				Object.entries(servers).length !== 0 ? (
 					Object.entries(servers).map(([key, server]) => {
 						return (
-							<Avatar
-								size="md"
-								src=""
-								borderRadius={
-									selectedServer === server ? "15px" : "full"
-								}
-								key={server._id}
-								name={server.name}
-								onClick={() => setSelectedServer(server)}
-							>
-								<AvatarBadge border="none" boxSize="1em">
-									<Image
-										w={4}
-										src={chainBadge(server.chain_id)}
-									/>
-								</AvatarBadge>
-							</Avatar>
+							<Tooltip placement="right" label={server.name}>
+								<Avatar
+									size="md"
+									src=""
+									borderRadius={
+										selectedServer === server
+											? "15px"
+											: "full"
+									}
+									key={server._id}
+									name={server.name}
+									onClick={() => setSelectedServer(server)}
+								>
+									<AvatarBadge border="none" boxSize="1em">
+										<Image
+											w={4}
+											src={chainBadge(server.chain_id)}
+										/>
+									</AvatarBadge>
+								</Avatar>
+							</Tooltip>
 						);
 					})
 				) : (
