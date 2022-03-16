@@ -40,7 +40,8 @@ function Server() {
 		setLoadingChannel,
 		dispatch,
 	} = useContext(ChannelContext);
-	const { createChannel, getChannelById } = useContext(TextileContext);
+	const { createChannel, getChannelById, getServerById } =
+		useContext(TextileContext);
 	const [newChannelName, setNewChannelName] = useState("");
 	const [serverStats, setServerStats] = useState(null);
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,7 +68,8 @@ function Server() {
 			dispatch({ type: "INITIAL_STATE" });
 			setLoadingChannel(true);
 			let channels = [];
-			for await (let channel_id of selectedServer.channels) {
+			let server = await getServerById(selectedServer._id);
+			for await (let channel_id of server.channels) {
 				let channel = await getChannelById(channel_id);
 				channels.push(channel);
 			}
