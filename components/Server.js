@@ -52,7 +52,7 @@ function Server() {
 				let response = await axios.get(
 					`https://api.covalenthq.com/v1/${selectedServer.chain_id}/nft_market/collection/${selectedServer.contract_address}/?key=${API_KEY}`
 				);
-				setServerStats({ stats: response.data.data.items[0] });
+				setServerStats({ stats: response.data.data.items[5] });
 			} catch (err) {
 				setServerStats(undefined);
 			}
