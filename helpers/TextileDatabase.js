@@ -155,8 +155,8 @@ async function createMessage(client, channel_id, messageJson) {
 
 	// await createDatabase(client);
 	// console.log(await client.listCollections(ThreadID.fromString(ThreadId)));
-	await createMessage(client, "71802fd0-ef6c-44b8-a5bc-b9388dd7eea5", {
-		account_address: "0x687bfa719c70925920a61d5a4f9fd738fd3d87c5",
-		message: "hey zorbas!",
+	await createMessage(client, "72276fe9-f783-4b01-8e13-8de3e96991d0", {
+		account_address: "0x8u29da719c70925920a61d5a4f9fd738fe3n75hq",
+		message: `Just realize that I have a bunch of zorbs, all with kind of single-ish color. I don't understand myself any more 😆`,
 	});
 })();

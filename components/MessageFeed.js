@@ -77,7 +77,9 @@ function MessageFeed({ id, selectedChannel }) {
 												7
 											)}`}
 										</Tag>
-										<Text>{message.message}</Text>
+										<Text textAlign="left">
+											{message.message}
+										</Text>
 									</VStack>
 								</HStack>
 							);
