@@ -92,6 +92,7 @@ function ServerList() {
 								placement="right"
 								label={server.name}
 								key={server._id}
+								bg="var(--chakra-colors-brand-300)"
 							>
 								<Avatar
 									size="md"
