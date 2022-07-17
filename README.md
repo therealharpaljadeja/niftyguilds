@@ -111,3 +111,13 @@ This project was part of ETHGlobal BuildQuest 2022 and won First Place under IPF
 [Winner Announcement](https://showcase.ethglobal.com/buildquest/niftyguilds-j058z)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Acknowledgments
+
+List of resources I find helpful and would like to give credit to.
+
+- [NextJS](https://nextjs.org/)
+- [Covalent API](https://www.covalenthq.com/docs/api/#/0/0/USD/1)
+- [Textile Thread](https://docs.textile.io/threads/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
