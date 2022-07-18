@@ -6,6 +6,9 @@
 </p>
 
 <h4 align="middle"> NiftyGuilds is a permissionless NFT gated group chat DApp.</h4>
+
+> Note: The Covalent API key might expire and hence the project might not function check developer console. I recommend to fork / clone the project and use your own Covalent API key.
+
 <p align="middle">
 <a href="https://www.youtube.com/watch?v=e1P4UkhLc0A">Demo Video</a>
 .
@@ -99,8 +102,6 @@ Don't forget to give the project a star! Thanks again!
 ## Contact
 
 Harpalsinh Jadeja - [@harpaljadeja11](https://twitter.com/harpaljadeja11) - jadejaharpal14@gmail.com
-
-Project Link: [https://github.com/therealharpaljadeja/niftyguilds](https://github.com/therealharpaljadeja/niftyguilds)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
